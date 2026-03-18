@@ -32,12 +32,15 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.suradi.renunganharian.R
 import com.suradi.renunganharian.ui.theme.LoraFont
+import com.suradi.renunganharian.ui.theme.StyleScript
 
 @Composable
 fun HomeScreen() {
@@ -112,7 +115,7 @@ fun HomeScreen() {
                         .background(Color(0x22FFFFFF))
                 )
             }
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // NAMA + SUBTITLE
             Column(
@@ -122,7 +125,7 @@ fun HomeScreen() {
                 Text(
                     text = "Suradi",
                     fontFamily = LoraFont,
-                    fontSize = 26.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF1F1F1F)
                 )
@@ -135,7 +138,7 @@ fun HomeScreen() {
                 )
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
             // CARD UTAMA
             Card(
@@ -154,13 +157,40 @@ fun HomeScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(24.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(22.dp),
+
                 ) {
+                    // KIRI
                     Text(
                         text = "Renungan Hari Ini",
+                        modifier = Modifier.fillMaxWidth(),
+                        fontFamily = LoraFont,
+                        textAlign = TextAlign.Start,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color(0xFF222222)
+                    )
+
+                    // CENTER
+                    Text(
+                        text = "Semua Seperti Yang Yesus Katakan",
+                        modifier = Modifier.fillMaxWidth() .padding(8.dp),
+                        textAlign = TextAlign.Center,
+                        fontFamily = StyleScript,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
+                        fontSize = 32.sp,
+                        color = Color(0xFF222222)
+                    )
+
+                    Text(
+                        text = "LUKAS 22:13",
+                        modifier = Modifier.fillMaxWidth() .padding(bottom = 8.dp),
+                        textAlign = TextAlign.Center,
+                        fontFamily = LoraFont,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 10.sp,
                         color = Color(0xFF222222)
                     )
 
@@ -214,7 +244,7 @@ fun HomeScreen() {
             modifier = Modifier
                 .size(112.dp)
                 .align(Alignment.TopCenter)
-                .offset(y = 190.dp)
+                .offset(y = 180.dp)
                 .shadow(
                     elevation = 12.dp,
                     shape = CircleShape,

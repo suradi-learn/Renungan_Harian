@@ -14,6 +14,10 @@ val LoraFont = FontFamily(
     Font(R.font.lora_reguler, FontWeight.Normal),
     Font(R.font.lora_italic, FontWeight.Normal)
 )
+
+val StyleScript = FontFamily(
+    Font(R.font.style_script)
+)
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
