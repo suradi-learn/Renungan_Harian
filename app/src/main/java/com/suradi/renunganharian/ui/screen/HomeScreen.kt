@@ -41,20 +41,25 @@ import androidx.compose.ui.unit.sp
 import com.suradi.renunganharian.R
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.StyleScript
+import com.suradi.renunganharian.data.dummy.dummyDevotionals
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onClickDetail: () -> Unit
+) {
+
+    val devotional = dummyDevotionals[0]
 
     val customHeaderShape = GenericShape { size, _ ->
         moveTo(0f,0f)
         lineTo(0f, size.height * 0.82f)
 
-        quadraticTo(
+        quadraticBezierTo(
             size.width * 0.30f, size.height * 1.00f,
             size.width * 0.60f, size.height * 0.86f
         )
 
-        quadraticTo(
+        quadraticBezierTo(
             size.width * 0.82f, size.height * 0.78f,
             size.width, size.height * 0.88f
         )
@@ -173,7 +178,7 @@ fun HomeScreen() {
 
                     // CENTER
                     Text(
-                        text = "Semua Seperti Yang Yesus Katakan",
+                        text = devotional.title,
                         modifier = Modifier.fillMaxWidth() .padding(8.dp),
                         textAlign = TextAlign.Center,
                         fontFamily = StyleScript,
@@ -184,7 +189,7 @@ fun HomeScreen() {
                     )
 
                     Text(
-                        text = "LUKAS 22:13",
+                        text = devotional.verseReference,
                         modifier = Modifier.fillMaxWidth() .padding(bottom = 8.dp),
                         textAlign = TextAlign.Center,
                         fontFamily = LoraFont,
@@ -197,7 +202,7 @@ fun HomeScreen() {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Button(
-                        onClick = {
+                        onClick = { onClickDetail()
                             // nanti bisa diarahkan ke halaman detail renungan
                         },
                         modifier = Modifier
@@ -211,6 +216,7 @@ fun HomeScreen() {
                         Text(
                             text = "Baca Selengkapnya",
                             fontSize = 16.sp,
+                            fontFamily = LoraFont,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
@@ -232,6 +238,7 @@ fun HomeScreen() {
                         Text(
                             text = "Lihat Renungan Sebelumnya",
                             fontSize = 15.sp,
+                            fontFamily = LoraFont,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -267,5 +274,7 @@ fun HomeScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(
+        onClickDetail = {}
+    )
 }
