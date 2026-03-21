@@ -14,6 +14,7 @@ val dummyDevotionals = listOf(
             Keempat, mereka tidak rasis, mereka akan bermain dan berkenalan dengan anak kecil lainnya tanpa memilih warna kulit, cara berbicaranya, bahasanya bahkan latar belakang keluarganya. Kelima, mereka sangat mudah melupakan kesalahan temannya dan saling mengampuni ketika ada yang melakukan kesalahan. Mereka pastinya akan kesal atau marah sesaat, tetapi kemudian akan main bersama lagi seolah-olah kesalahan temannya tidak pernah terjadi dan pastinya mereka tidak menyimpan kesalahan temannya. Dan keenam, mereka sangat ingin tahu, anak kecil selalu ingin menyerap informasi dan pengetahuan. Kita yang kerap menahan diri untuk tidak memberikan semua informasi karena memang belum waktunya mereka tahu, tetapi sepertinya mereka tidak pernah bosan menanyakan sesuatu.
             Marilah kita belajar hari ini dan seterusnya memiliki karakter seperti anak kecil yang terus menjaga sukacita dalam hati walaupun ada di tengah kesulitan hidup karena kita tahu siapa yang kita percaya dalam segala hal dan kepada siapa kita bisa datang dan mengadu tentang semua yang ada di hati ini. Bapa kita di Sorga selalu siap menolong dan membuka tanganNya untuk memeluk kita. Teruslah belajar menerima orang lain apa adanya, mudah mengampuni dan tidak rasis. Dan jangan pernah berhenti belajar, teruslah minta pewahyuan dan pengertian yang lebih lagi dari Tuhan ketika kita membaca firmanNya. AMIN!""".trimIndent(),
         closing = "Kasih karunia Tuhan cukup bagimu.",
-        devotionalDate = "2026-03-18"
+        month = 1,
+        day = 1
     )
 )

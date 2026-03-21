@@ -12,6 +12,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -36,13 +38,18 @@ import com.suradi.renunganharian.model.Devotional
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.RenunganharianTheme
 import com.suradi.renunganharian.ui.theme.StyleScript
+import com.suradi.renunganharian.viewmodel.FavoriteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
     devotional: Devotional,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onFavoriteClick: () -> Unit,
+    favoriteViewModel: FavoriteViewModel
 ) {
+    val isFavorite = favoriteViewModel.isFavorite(devotional)
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -59,6 +66,24 @@ fun DetailScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Kembali"
+                        )
+                    }
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            favoriteViewModel.toggleFavorite(devotional)
+                            onFavoriteClick()
+                        }
+                    ) {
+                        Icon(
+                            imageVector = if (isFavorite) {
+                                Icons.Filled.Favorite
+                            } else {
+                                Icons.Outlined.FavoriteBorder
+                            },
+                            contentDescription = "Favorite",
+                            tint = Color.Red
                         )
                     }
                 },
@@ -152,7 +177,7 @@ fun DetailContent(
                 )
 
                 Text(
-                    text = "Tanggal Renungan: ${devotional.devotionalDate}",
+                    text = "Tanggal Renungan: ${devotional.day} / ${devotional.month}",
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
@@ -169,7 +194,9 @@ fun DetailScreenPreview() {
     RenunganharianTheme {
         DetailScreen(
             devotional = dummyDevotionals[0],
-            onBackClick = {}
+            onBackClick = {},
+            onFavoriteClick = {},
+            favoriteViewModel = FavoriteViewModel()
         )
     }
 }

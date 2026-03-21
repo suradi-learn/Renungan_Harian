@@ -7,5 +7,7 @@ data class Devotional(
     val verseReference: String,
     val content: String,
     val closing: String,
-    val devotionalDate: String
+    val month: Int,
+    val day: Int,
+    var isFavorite: Boolean = false
 )
