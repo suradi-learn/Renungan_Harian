@@ -24,6 +24,9 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,16 +42,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.suradi.renunganharian.R
+import com.suradi.renunganharian.data.dummy.dummyDevotionals
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.StyleScript
-import com.suradi.renunganharian.data.dummy.dummyDevotionals
+import androidx.lifecycle.viewmodel.compose.viewModel
+import java.time.LocalDate
+import com.suradi.renunganharian.viewmodel.HomeViewModel
+
 
 @Composable
 fun HomeScreen(
-    onClickDetail: () -> Unit
+    onClickDetail: (Int) -> Unit
 ) {
 
-    val devotional = dummyDevotionals[0]
+    val homeViewModel: HomeViewModel = viewModel()
+
+    val todayDevotional by homeViewModel.todayDevotional.collectAsState()
+
+
+    val devotional = todayDevotional
+
+    val today = java.time.LocalDate.now()
+
 
     val customHeaderShape = GenericShape { size, _ ->
         moveTo(0f,0f)
@@ -167,7 +182,7 @@ fun HomeScreen(
                 ) {
                     // KIRI
                     Text(
-                        text = "Renungan Hari Ini",
+                        text = "Renungan ${today.dayOfMonth}/${today.monthValue}",
                         modifier = Modifier.fillMaxWidth(),
                         fontFamily = LoraFont,
                         textAlign = TextAlign.Start,
@@ -178,7 +193,7 @@ fun HomeScreen(
 
                     // CENTER
                     Text(
-                        text = devotional.title,
+                        text = devotional?.title ?: "Memuat renungan...",
                         modifier = Modifier.fillMaxWidth() .padding(8.dp),
                         textAlign = TextAlign.Center,
                         fontFamily = StyleScript,
@@ -189,7 +204,7 @@ fun HomeScreen(
                     )
 
                     Text(
-                        text = devotional.verseReference,
+                        text = devotional?.verseReference ?: "",
                         modifier = Modifier.fillMaxWidth() .padding(bottom = 8.dp),
                         textAlign = TextAlign.Center,
                         fontFamily = LoraFont,
@@ -202,9 +217,13 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Button(
-                        onClick = { onClickDetail()
+                        onClick = {
+                            devotional?.let {
+                                onClickDetail( it.id)
+                            }
                             // nanti bisa diarahkan ke halaman detail renungan
                         },
+                        enabled = devotional != null,
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(52.dp),
@@ -275,6 +294,6 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        onClickDetail = {}
+        onClickDetail = { _ -> }
     )
 }

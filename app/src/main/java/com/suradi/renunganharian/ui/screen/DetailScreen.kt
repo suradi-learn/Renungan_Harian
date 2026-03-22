@@ -17,6 +17,7 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -26,6 +27,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
@@ -33,21 +36,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.suradi.renunganharian.data.dummy.dummyDevotionals
 import com.suradi.renunganharian.model.Devotional
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.RenunganharianTheme
 import com.suradi.renunganharian.ui.theme.StyleScript
 import com.suradi.renunganharian.viewmodel.FavoriteViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.suradi.renunganharian.viewmodel.DetailViewModel
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    devotional: Devotional,
+    devotionalId: Int,
     onBackClick: () -> Unit,
     onFavoriteClick: () -> Unit,
     favoriteViewModel: FavoriteViewModel
 ) {
+    val detailViewModel: DetailViewModel = viewModel()
+    val devotionalState = detailViewModel.devotional.collectAsState()
+
+    LaunchedEffect(devotionalId) {
+        detailViewModel.fetchDevotional(devotionalId)
+    }
+
+    val devotional = devotionalState.value
+
+    if (devotional == null) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center
+        ) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(androidx.compose.ui.Alignment.CenterHorizontally)
+            )
+        }
+        return
+    }
+
     val isFavorite = favoriteViewModel.isFavorite(devotional)
 
     Scaffold(
@@ -168,7 +194,7 @@ fun DetailContent(
                 )
 
                 Text(
-                    text = devotional.closing,
+                    text = devotional.closing ?: "",
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = LoraFont,
                     fontStyle = FontStyle.Italic,
@@ -193,7 +219,7 @@ fun DetailContent(
 fun DetailScreenPreview() {
     RenunganharianTheme {
         DetailScreen(
-            devotional = dummyDevotionals[0],
+            devotionalId = 1,
             onBackClick = {},
             onFavoriteClick = {},
             favoriteViewModel = FavoriteViewModel()

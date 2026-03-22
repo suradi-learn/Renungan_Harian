@@ -42,7 +42,19 @@ android {
 dependencies {
     dependencies {
 
-        // 🔥 Compose BOM (WAJIB untuk sinkron versi)
+        implementation("com.squareup.retrofit2:retrofit:2.11.0")
+        implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+        implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+        implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+        implementation("com.squareup.retrofit2:retrofit:2.11.0")
+        implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+        implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
+        implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
+
+        // Compose BOM (WAJIB untuk sinkron versi)
         implementation(platform("androidx.compose:compose-bom:2024.04.01"))
 
         implementation("androidx.activity:activity-compose:1.8.2")
@@ -58,7 +70,7 @@ dependencies {
         // Icon
         implementation("androidx.compose.material:material-icons-extended")
 
-        // 🔥 Navigation (WAJIB cocok dengan Compose)
+        // Navigation (WAJIB cocok dengan Compose)
         implementation("androidx.navigation:navigation-compose:2.7.7")
 
         // Debug

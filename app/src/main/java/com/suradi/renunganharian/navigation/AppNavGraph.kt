@@ -5,7 +5,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.suradi.renunganharian.data.dummy.dummyDevotionals
 import com.suradi.renunganharian.ui.screen.DetailScreen
 import com.suradi.renunganharian.ui.screen.FavoriteScreen
 import com.suradi.renunganharian.ui.screen.HomeScreen
@@ -22,15 +21,18 @@ fun AppNavGraph() {
     ) {
         composable("home") {
             HomeScreen(
-                onClickDetail = {
-                    navController.navigate("detail")
+                onClickDetail = { devotionalId ->
+                    navController.navigate("detail/$devotionalId")
                 }
             )
         }
 
-        composable("detail") {
-            DetailScreen(
-                devotional = dummyDevotionals[0],
+        composable("detail/{devotionalId}") { backStackEntry ->
+            val devotionalId =
+                backStackEntry.arguments?.getString("devotionalId")?.toIntOrNull() ?: 0
+
+                DetailScreen(
+                devotionalId = devotionalId,
                 onBackClick = {
                     navController.popBackStack()
                 },
@@ -47,8 +49,8 @@ fun AppNavGraph() {
                 onBackClick = {
                     navController.popBackStack()
                 },
-                onItemClick = { devotional ->
-                    navController.navigate("detail")
+                onClickDetail = { devotionalId ->
+                    navController.navigate("detail/${devotionalId}")
                 }
             )
         }

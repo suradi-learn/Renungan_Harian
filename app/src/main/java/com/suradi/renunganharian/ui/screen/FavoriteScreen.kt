@@ -34,6 +34,8 @@ import com.suradi.renunganharian.model.Devotional
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.viewmodel.FavoriteViewModel
 import androidx.compose.foundation.lazy.items
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.suradi.renunganharian.ui.theme.StyleScript
@@ -43,9 +45,9 @@ import com.suradi.renunganharian.ui.theme.StyleScript
 fun FavoriteScreen(
     favoriteViewModel: FavoriteViewModel,
     onBackClick: () -> Unit,
-    onItemClick: (Devotional) -> Unit
+    onClickDetail: (Int) -> Unit
 ) {
-    val favorites = favoriteViewModel.favorites
+    val favorites by favoriteViewModel.favorites.collectAsState()
 
     Scaffold(
         topBar = {
@@ -75,7 +77,10 @@ fun FavoriteScreen(
         FavoriteContent(
             favorites = favorites,
             innerPadding = innerPadding,
-            onItemClick = onItemClick
+            onClickDetail = onClickDetail,
+            onRemoveFavorite = { devotional ->
+                favoriteViewModel.removeFavorite(devotional)
+            }
         )
     }
 }
@@ -84,7 +89,8 @@ fun FavoriteScreen(
 fun FavoriteContent(
     favorites: List<Devotional>,
     innerPadding: PaddingValues,
-    onItemClick: (Devotional) -> Unit
+    onClickDetail: (Int) -> Unit,
+    onRemoveFavorite: (Devotional) -> Unit
 ) {
     if (favorites.isEmpty()) {
         Column(
@@ -97,7 +103,7 @@ fun FavoriteContent(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Belum ada renungan favorite.",
+                text = "Belum ada renungan yang dipilih.",
                 textAlign = TextAlign.Center,
                 fontFamily = LoraFont,
                 style = MaterialTheme.typography.bodyLarge,
@@ -117,9 +123,8 @@ fun FavoriteContent(
             items(favorites) { devotional ->
                 FavoriteItem(
                     devotional = devotional,
-                    onClick = {
-                        onItemClick(devotional)
-                    }
+                    onClick = { onClickDetail(devotional.id) },
+                    onDeleteClick = { onRemoveFavorite(devotional) }
                 )
             }
         }
@@ -129,7 +134,8 @@ fun FavoriteContent(
 @Composable
 fun FavoriteItem(
     devotional: Devotional,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDeleteClick: () -> Unit
     ) {
     Card(
         modifier = Modifier
@@ -169,9 +175,9 @@ fun FavoriteItem(
 
             Text(
                 text = devotional.title,
-                style = MaterialTheme.typography.titleMedium,
+                style = MaterialTheme.typography.titleLarge,
                 fontFamily = StyleScript,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
                 color = Color(0xFF2E2E2E)
             )
 
