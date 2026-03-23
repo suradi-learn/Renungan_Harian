@@ -1,10 +1,13 @@
 package com.suradi.renunganharian.ui.screen
 
+import com.suradi.renunganharian.utils.getMonthName
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,7 +27,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -42,17 +44,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.suradi.renunganharian.R
-import com.suradi.renunganharian.data.dummy.dummyDevotionals
 import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.StyleScript
 import androidx.lifecycle.viewmodel.compose.viewModel
-import java.time.LocalDate
+import com.suradi.renunganharian.utils.formatDevotionalDate
 import com.suradi.renunganharian.viewmodel.HomeViewModel
 
 
 @Composable
 fun HomeScreen(
-    onClickDetail: (Int) -> Unit
+    onClickDetail: (Int) -> Unit,
+    onClickPreviousDevotions: () -> Unit
 ) {
 
     val homeViewModel: HomeViewModel = viewModel()
@@ -61,6 +63,10 @@ fun HomeScreen(
 
 
     val devotional = todayDevotional
+
+    val formattedDate = devotional?.let {
+        formatDevotionalDate(it.day, it.month)
+    } ?: "Memuat..."
 
     val today = java.time.LocalDate.now()
 
@@ -180,16 +186,26 @@ fun HomeScreen(
                         .padding(22.dp),
 
                 ) {
-                    // KIRI
-                    Text(
-                        text = "Renungan ${today.dayOfMonth}/${today.monthValue}",
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        fontFamily = LoraFont,
-                        textAlign = TextAlign.Start,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color(0xFF222222)
-                    )
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Renungan Hari Ini",
+                            fontFamily = LoraFont,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFF222222)
+                        )
+
+                        Text(
+                            text = formattedDate,
+                            fontFamily = LoraFont,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF7C6CF2) // warna ungu khas kamu
+                        )
+                    }
 
                     // CENTER
                     Text(
@@ -243,6 +259,7 @@ fun HomeScreen(
 
                     Button(
                         onClick = {
+                            onClickPreviousDevotions()
                             // nanti bisa diarahkan ke list renungan sebelumnya
                         },
                         modifier = Modifier
@@ -294,6 +311,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
-        onClickDetail = { _ -> }
+        onClickDetail = { _ -> },
+        onClickPreviousDevotions = {}
     )
 }

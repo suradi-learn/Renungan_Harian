@@ -39,6 +39,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.suradi.renunganharian.ui.theme.StyleScript
+import com.suradi.renunganharian.utils.formatDevotionalDate
+import com.suradi.renunganharian.utils.getMonthName
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -156,14 +158,7 @@ fun FavoriteItem(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Month: ${devotional.month}",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontFamily = LoraFont,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF6A4C93)
-                )
-                Text(
-                    text = "Day: ${devotional.day}",
+                    text = formatDevotionalDate(devotional.day, devotional.month),
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = LoraFont,
                     fontWeight = FontWeight.Bold,

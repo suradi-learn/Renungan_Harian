@@ -40,6 +40,10 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.benchmark.traceprocessor)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.ui.text)
     dependencies {
 
         implementation("com.squareup.retrofit2:retrofit:2.11.0")

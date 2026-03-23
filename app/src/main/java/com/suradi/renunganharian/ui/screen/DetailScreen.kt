@@ -42,6 +42,8 @@ import com.suradi.renunganharian.ui.theme.RenunganharianTheme
 import com.suradi.renunganharian.ui.theme.StyleScript
 import com.suradi.renunganharian.viewmodel.FavoriteViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.suradi.renunganharian.utils.formatDevotionalDate
+import com.suradi.renunganharian.utils.getMonthName
 import com.suradi.renunganharian.viewmodel.DetailViewModel
 
 
@@ -203,7 +205,7 @@ fun DetailContent(
                 )
 
                 Text(
-                    text = "Tanggal Renungan: ${devotional.day} / ${devotional.month}",
+                    text = "Tanggal Renungan: ${formatDevotionalDate(devotional.day, devotional.month)}",
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold,
                     color = Color.Gray
