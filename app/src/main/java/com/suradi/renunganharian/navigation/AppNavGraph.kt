@@ -22,6 +22,7 @@ fun AppNavGraph() {
 
     val devotionals by homeViewModel.devotionals.collectAsState()
 
+    val previousDevotionals by homeViewModel.previousDevotionals.collectAsState()
 
     NavHost(
         navController = navController,
@@ -33,6 +34,7 @@ fun AppNavGraph() {
                     navController.navigate("detail/$devotionalId")
                 },
                 onClickPreviousDevotions = {
+                    homeViewModel.fetchPreviousDevotionals()
                     navController.navigate("previous_devotions")
                 }
             )
@@ -40,7 +42,7 @@ fun AppNavGraph() {
 
         composable("previous_devotions") {
             PreviousDevotionsScreen(
-                devotionals = devotionals,
+                devotionals = previousDevotionals,
                 onBackClick = {
                     navController.popBackStack()
                 },

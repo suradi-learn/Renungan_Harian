@@ -7,4 +7,7 @@ interface ApiService {
 
     @GET("api/devotionals")
     suspend fun getAllDevotionals(): List<Devotional>
+
+    @GET("api/devotionals/previous")
+    suspend fun getPreviousDevotionals(): List<Devotional>
 }

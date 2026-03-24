@@ -9,6 +9,10 @@ class DevotionalRepository {
         return RetrofitInstance.api.getAllDevotionals()
     }
 
+    suspend fun getPreviousDevotionals(): List<Devotional> {
+        return RetrofitInstance.api.getPreviousDevotionals()
+    }
+
     suspend fun getDevotionalById(id: Int): Devotional? {
         return RetrofitInstance.api.getAllDevotionals().find { it.id == id }
     }

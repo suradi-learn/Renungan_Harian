@@ -13,6 +13,9 @@ class HomeViewModel : ViewModel() {
 
     private val repository = DevotionalRepository()
 
+    private val _previousDevotionals = MutableStateFlow<List<Devotional>>(emptyList())
+    val previousDevotionals: StateFlow<List<Devotional>> = _previousDevotionals
+
     private val _devotionals = MutableStateFlow<List<Devotional>>(emptyList())
     val devotionals: StateFlow<List<Devotional>> = _devotionals
 
@@ -21,6 +24,16 @@ class HomeViewModel : ViewModel() {
 
     init {
         fetchDevotionals()
+    }
+
+    fun fetchPreviousDevotionals() {
+        viewModelScope.launch {
+            try {
+                _previousDevotionals.value = repository.getPreviousDevotionals()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     private fun fetchDevotionals() {

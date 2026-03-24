@@ -91,7 +91,7 @@ fun PreviousDevotionsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     style = MaterialTheme.typography.bodyMedium,
                     fontFamily = LoraFont,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.SemiBold,
                     color = Color.Gray,
                     textAlign = TextAlign.Start
                 )
