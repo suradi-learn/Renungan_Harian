@@ -40,6 +40,8 @@ import com.suradi.renunganharian.ui.theme.StyleScript
 import com.suradi.renunganharian.utils.formatDevotionalDate
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.text.style.TextAlign
+import com.suradi.renunganharian.utils.getCardColor
+import com.suradi.renunganharian.utils.getTitleColor
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -214,7 +216,7 @@ fun PreviousDevotionItem(
         shape = RoundedCornerShape(30.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = getCardColor(devotional.month)
             ),
     ) {
         Column(
@@ -237,7 +239,7 @@ fun PreviousDevotionItem(
                 style = MaterialTheme.typography.titleMedium,
                 fontFamily = StyleScript,
                 fontSize = 28.sp,
-                color = Color(0xFF2B2B2B),
+                color = getTitleColor(devotional.month),
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis

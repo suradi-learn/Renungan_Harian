@@ -68,6 +68,7 @@ fun AppNavGraph() {
 
         composable("favorite") {
             FavoriteScreen(
+                devotionals = devotionals,
                 favoriteViewModel = favoriteViewModel,
                 onBackClick = {
                     navController.popBackStack()

@@ -44,6 +44,7 @@ import com.suradi.renunganharian.viewmodel.FavoriteViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suradi.renunganharian.utils.formatDevotionalDate
 import com.suradi.renunganharian.utils.getMonthName
+import com.suradi.renunganharian.utils.getTitleColor
 import com.suradi.renunganharian.viewmodel.DetailViewModel
 
 
@@ -76,7 +77,7 @@ fun DetailScreen(
         return
     }
 
-    val isFavorite = favoriteViewModel.isFavorite(devotional)
+    val isFavorite = favoriteViewModel.isFavorite(devotional.id)
 
     Scaffold(
         topBar = {
@@ -100,7 +101,7 @@ fun DetailScreen(
                 actions = {
                     IconButton(
                         onClick = {
-                            favoriteViewModel.toggleFavorite(devotional)
+                            favoriteViewModel.toggleFavorite(devotional.id)
                             onFavoriteClick()
                         }
                     ) {
@@ -161,7 +162,7 @@ fun DetailContent(
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth(),
-                    color = Color(0xFF2E2E2E)
+                    color = getTitleColor(devotional.month)
                 )
                 Text(
                     text = devotional.verseReference,
@@ -220,11 +221,6 @@ fun DetailContent(
 @Composable
 fun DetailScreenPreview() {
     RenunganharianTheme {
-        DetailScreen(
-            devotionalId = 1,
-            onBackClick = {},
-            onFavoriteClick = {},
-            favoriteViewModel = FavoriteViewModel()
-        )
+
     }
 }

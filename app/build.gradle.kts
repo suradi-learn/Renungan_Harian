@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.ui.text)
+    implementation(libs.androidx.constraintlayout)
     dependencies {
 
         implementation("com.squareup.retrofit2:retrofit:2.11.0")
@@ -76,6 +77,8 @@ dependencies {
 
         // Navigation (WAJIB cocok dengan Compose)
         implementation("androidx.navigation:navigation-compose:2.7.7")
+
+        implementation("androidx.datastore:datastore-preferences:1.1.1")
 
         // Debug
         debugImplementation("androidx.compose.ui:ui-tooling")

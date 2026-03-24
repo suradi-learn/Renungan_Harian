@@ -24,6 +24,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,6 +49,7 @@ import com.suradi.renunganharian.ui.theme.LoraFont
 import com.suradi.renunganharian.ui.theme.StyleScript
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.suradi.renunganharian.utils.formatDevotionalDate
+import com.suradi.renunganharian.utils.getTitleColor
 import com.suradi.renunganharian.viewmodel.HomeViewModel
 
 
@@ -66,7 +68,7 @@ fun HomeScreen(
 
     val formattedDate = devotional?.let {
         formatDevotionalDate(it.day, it.month)
-    } ?: "Memuat..."
+    } ?: "--"
 
     val today = java.time.LocalDate.now()
 
@@ -203,21 +205,38 @@ fun HomeScreen(
                             fontFamily = LoraFont,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF7C6CF2) // warna ungu khas kamu
+                            color = Color(0xFF7C6CF2) // warna ungu
                         )
                     }
 
                     // CENTER
-                    Text(
-                        text = devotional?.title ?: "Memuat renungan...",
-                        modifier = Modifier.fillMaxWidth() .padding(8.dp),
-                        textAlign = TextAlign.Center,
-                        fontFamily = StyleScript,
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 32.sp,
-                        color = Color(0xFF222222)
-                    )
+//                    Text(
+//                        text = devotional?.title ?: "Sedang Loading...",
+//                        modifier = Modifier.fillMaxWidth() .padding(8.dp),
+//                        textAlign = TextAlign.Center,
+//                        fontFamily = StyleScript,
+//                        style = MaterialTheme.typography.titleLarge,
+//                        fontWeight = FontWeight.Bold,
+//                        fontSize = 32.sp,
+//                        color = Color(0xFF222222)
+//                    )
+
+                    devotional?.let { data ->
+                        Text(
+                            text = data.title,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(8.dp),
+                            textAlign = TextAlign.Center,
+                            fontFamily = StyleScript,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 32.sp,
+                            color = getTitleColor(data.month)
+                        )
+                    } ?: CircularProgressIndicator()
+
+
 
                     Text(
                         text = devotional?.verseReference ?: "",

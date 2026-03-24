@@ -40,16 +40,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.style.TextAlign
 import com.suradi.renunganharian.ui.theme.StyleScript
 import com.suradi.renunganharian.utils.formatDevotionalDate
+import com.suradi.renunganharian.utils.getCardColor
 import com.suradi.renunganharian.utils.getMonthName
+import com.suradi.renunganharian.utils.getTitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteScreen(
+    devotionals: List<Devotional>,
     favoriteViewModel: FavoriteViewModel,
     onBackClick: () -> Unit,
     onClickDetail: (Int) -> Unit
 ) {
-    val favorites by favoriteViewModel.favorites.collectAsState()
+    val favoriteIds = favoriteViewModel.favoriteIds.value
+    val favorites = devotionals.filter { it.id in favoriteIds }
 
     Scaffold(
         topBar = {
@@ -76,58 +80,40 @@ fun FavoriteScreen(
             )
         }
     ) { innerPadding ->
-        FavoriteContent(
-            favorites = favorites,
-            innerPadding = innerPadding,
-            onClickDetail = onClickDetail,
-            onRemoveFavorite = { devotional ->
-                favoriteViewModel.removeFavorite(devotional)
-            }
-        )
-    }
-}
-
-@Composable
-fun FavoriteContent(
-    favorites: List<Devotional>,
-    innerPadding: PaddingValues,
-    onClickDetail: (Int) -> Unit,
-    onRemoveFavorite: (Devotional) -> Unit
-) {
-    if (favorites.isEmpty()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFF7F7F7))
-                .padding(innerPadding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "Belum ada renungan yang dipilih.",
-                textAlign = TextAlign.Center,
-                fontFamily = LoraFont,
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.Gray,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-    } else {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color(0xFFF7F7F7))
-                .padding(innerPadding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(favorites) { devotional ->
-                FavoriteItem(
-                    devotional = devotional,
-                    onClick = { onClickDetail(devotional.id) },
-                    onDeleteClick = { onRemoveFavorite(devotional) }
+        if (favorites.isEmpty()) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFF7F7F7))
+                    .padding(innerPadding)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Belum ada renungan yang dipilih.",
+                    textAlign = TextAlign.Center,
+                    fontFamily = LoraFont,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = Color.Gray,
+                    modifier = Modifier.fillMaxWidth()
                 )
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFFF7F7F7))
+                    .padding(innerPadding)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(favorites) { devotional ->
+                    FavoriteItem(
+                        devotional = devotional,
+                        onClick = { onClickDetail(devotional.id) }
+                    )
+                }
             }
         }
     }
@@ -137,7 +123,6 @@ fun FavoriteContent(
 fun FavoriteItem(
     devotional: Devotional,
     onClick: () -> Unit,
-    onDeleteClick: () -> Unit
     ) {
     Card(
         modifier = Modifier
@@ -145,7 +130,7 @@ fun FavoriteItem(
             .clickable { onClick() },
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color.White
+            containerColor = getCardColor(devotional.month)
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
@@ -173,7 +158,7 @@ fun FavoriteItem(
                 style = MaterialTheme.typography.titleLarge,
                 fontFamily = StyleScript,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF2E2E2E)
+                color = getTitleColor(devotional.month)
             )
 
             Text(
