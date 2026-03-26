@@ -24,7 +24,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -209,33 +208,34 @@ fun HomeScreen(
                         )
                     }
 
-                    // CENTER
-//                    Text(
-//                        text = devotional?.title ?: "Sedang Loading...",
-//                        modifier = Modifier.fillMaxWidth() .padding(8.dp),
-//                        textAlign = TextAlign.Center,
-//                        fontFamily = StyleScript,
-//                        style = MaterialTheme.typography.titleLarge,
-//                        fontWeight = FontWeight.Bold,
-//                        fontSize = 32.sp,
-//                        color = Color(0xFF222222)
-//                    )
+//                     CENTER
+                    Text(
+                        text = devotional?.title ?: "Sedang Loading...",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        textAlign = TextAlign.Center,
+                        fontFamily = StyleScript,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 32.sp,
+                        color = devotional?.let {getTitleColor(it.month) } ?: Color.Black
+                    )
 
-                    devotional?.let { data ->
-                        Text(
-                            text = data.title,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            textAlign = TextAlign.Center,
-                            fontFamily = StyleScript,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 32.sp,
-                            color = getTitleColor(data.month)
-                        )
-                    } ?: CircularProgressIndicator()
-
+//                    devotional?.let { data ->
+//                        Text(
+//                            text = data.title,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .padding(8.dp),
+//                            textAlign = TextAlign.Center,
+//                            fontFamily = StyleScript,
+//                            style = MaterialTheme.typography.titleLarge,
+//                            fontWeight = FontWeight.Bold,
+//                            fontSize = 32.sp,
+//                            color = getTitleColor(data.month)
+//                        )
+//                    }
 
 
                     Text(
