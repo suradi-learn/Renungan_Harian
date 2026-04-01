@@ -46,18 +46,18 @@ import com.suradi.renunganharian.utils.getTitleColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FavoriteScreen(
+fun FavoriteScreen(  // composable utama halaman favorite
     devotionals: List<Devotional>,
-    favoriteViewModel: FavoriteViewModel,
-    onBackClick: () -> Unit,
+    favoriteViewModel: FavoriteViewModel, // sumber data favorite yang dibagikan dari AppNavGraph
+    onBackClick: () -> Unit, // callback untuk tombol panah kembali
     onClickDetail: (Int) -> Unit
 ) {
-    val favoriteIds = favoriteViewModel.favoriteIds.value
+    val favoriteIds = favoriteViewModel.favoriteIds.value  // mengambil daftar favorite dari ViewModel
     val favorites = devotionals.filter { it.id in favoriteIds }
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
+            CenterAlignedTopAppBar( // membuat header halaman yang konsisten dengan detail screen
                 title = {
                     Text(
                         text = "Renungan Pilihan",
@@ -67,7 +67,7 @@ fun FavoriteScreen(
                     )
                 },
                 navigationIcon = {
-                    IconButton(onClick = onBackClick) {
+                    IconButton(onClick = onBackClick) { // saat ditekan, halaman kembali ke screen sebelumnya
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Kembali"
@@ -79,8 +79,8 @@ fun FavoriteScreen(
                 )
             )
         }
-    ) { innerPadding ->
-        if (favorites.isEmpty()) {
+    ) { innerPadding -> // padding dari Scaffold agar konten tidak tertutup topbar
+        if (favorites.isEmpty()) { // mengecek apakah daftar favorite masih kosong
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -88,19 +88,19 @@ fun FavoriteScreen(
                     .padding(innerPadding)
                     .padding(16.dp),
                 verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally // membuat tampilan empty state dan memusatkan komponen ke tengah layar
             ) {
                 Text(
                     text = "Belum ada renungan yang dipilih.",
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center, // meratakan isi teks ke tengah di dalam area Text
                     fontFamily = LoraFont,
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.Gray,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth() // memperlebar area Text agar textAlign Center bekerja jelas
                 )
             }
         } else {
-            LazyColumn(
+            LazyColumn( // jika favorite ada, tampilkan daftar dalam bentuk list vertikal
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color(0xFFF7F7F7))
@@ -108,8 +108,8 @@ fun FavoriteScreen(
                     .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(favorites) { devotional ->
-                    FavoriteItem(
+                items(favorites) { devotional -> // melakukan iterasi setiap objek Devotional di list favorites
+                    FavoriteItem(  // setiap item meneruskan data devotional yang dipilih ke callback
                         devotional = devotional,
                         onClick = { onClickDetail(devotional.id) }
                     )
@@ -120,12 +120,12 @@ fun FavoriteScreen(
 }
 
 @Composable
-fun FavoriteItem(
+fun FavoriteItem(   // composable untuk satu kartu favorite
     devotional: Devotional,
-    onClick: () -> Unit,
+    onClick: () -> Unit, // callback ketika kartu ditekan
     ) {
     Card(
-        modifier = Modifier
+        modifier = Modifier  // card dibuat selebar layar dan dapat diklik
             .fillMaxWidth()
             .clickable { onClick() },
         shape = RoundedCornerShape(20.dp),

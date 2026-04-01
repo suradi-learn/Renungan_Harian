@@ -3,7 +3,7 @@ package com.suradi.renunganharian.data.repository
 import com.suradi.renunganharian.model.Devotional
 import com.suradi.renunganharian.network.RetrofitInstance
 
-class DevotionalRepository {
+class DevotionalRepository { // untuk mengambil data API
 
     suspend fun getAllDevotionals(): List<Devotional> {
         return RetrofitInstance.api.getAllDevotionals()

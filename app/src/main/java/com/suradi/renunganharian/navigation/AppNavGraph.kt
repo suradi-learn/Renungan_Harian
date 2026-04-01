@@ -15,23 +15,23 @@ import com.suradi.renunganharian.viewmodel.FavoriteViewModel
 import com.suradi.renunganharian.viewmodel.HomeViewModel
 
 @Composable
-fun AppNavGraph() {
-    val navController = rememberNavController()
-    val favoriteViewModel: FavoriteViewModel = viewModel()
+fun AppNavGraph() { // composable yang mengatur seluruh navigasi aplikasi
+    val navController = rememberNavController() // membuat controller navigasi dan menyimpannya selama composable masih aktif
+    val favoriteViewModel: FavoriteViewModel = viewModel() // membuat satu instance FavoriteViewModel yang bisa dipakai bersama oleh beberapa screen
     val homeViewModel: HomeViewModel = viewModel()
 
     val devotionals by homeViewModel.devotionals.collectAsState()
 
     val previousDevotionals by homeViewModel.previousDevotionals.collectAsState()
 
-    NavHost(
+    NavHost(                           // container utama untuk navigasi
         navController = navController,
-        startDestination = "home"
+        startDestination = "home" // halaman pertama yang dibuka
     ) {
-        composable("home") {
+        composable("home") { // mendefinisikan route home
             HomeScreen(
                 onClickDetail = { devotionalId ->
-                    navController.navigate("detail/$devotionalId")
+                    navController.navigate("detail/$devotionalId") // saat item home ditekan, aplikasi berpindah ke route detail
                 },
                 onClickPreviousDevotions = {
                     homeViewModel.fetchPreviousDevotionals()
@@ -52,28 +52,28 @@ fun AppNavGraph() {
             )
         }
 
-        composable("detail/{devotionalId}") { backStackEntry ->
+        composable("detail/{devotionalId}") { backStackEntry -> // halaman detail
             val devotionalId =
                 backStackEntry.arguments?.getString("devotionalId")?.toIntOrNull() ?: 0
 
                 DetailScreen(
                 devotionalId = devotionalId,
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.popBackStack() // kembali ke halaman sebelumnya
                 },
                 onFavoriteClick = {
                     navController.navigate("favorite")
                 },
-                favoriteViewModel = favoriteViewModel
+                favoriteViewModel = favoriteViewModel // mengirim ViewModel yang sama ke DetailScreen agar daftar favorite sinkron
             )
         }
 
-        composable("favorite") {
-            FavoriteScreen(
+        composable("favorite") { // destinasi baru untuk halaman favorite
+            FavoriteScreen( // memanggil halaman favorite
                 devotionals = devotionals,
-                favoriteViewModel = favoriteViewModel,
+                favoriteViewModel = favoriteViewModel, // mengirim ViewModel yang sama ke FavoriteScreen
                 onBackClick = {
-                    navController.popBackStack()
+                    navController.popBackStack() // mengembalikan pengguna ke halaman sebelumnya
                 },
                 onClickDetail = { devotionalId ->
                     navController.navigate("detail/${devotionalId}")
@@ -82,3 +82,4 @@ fun AppNavGraph() {
         }
     }
 }
+

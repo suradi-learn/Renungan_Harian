@@ -5,8 +5,8 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("api/devotionals")
-    suspend fun getAllDevotionals(): List<Devotional>
+    @GET("api/devotionals") // endpoint API
+    suspend fun getAllDevotionals(): List<Devotional> // suspend adalah coroutine async dan List<Devotional> adalah response JSON menjadi list object
 
     @GET("api/devotionals/previous")
     suspend fun getPreviousDevotionals(): List<Devotional>

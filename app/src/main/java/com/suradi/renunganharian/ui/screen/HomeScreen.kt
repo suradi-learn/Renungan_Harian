@@ -104,7 +104,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(260.dp)
-                    .clip(customHeaderShape)
+                    .clip(customHeaderShape) //membentuk header
                     .background(
                         brush = Brush.linearGradient(
                             colors = listOf(
@@ -222,21 +222,6 @@ fun HomeScreen(
                         color = devotional?.let {getTitleColor(it.month) } ?: Color.Black
                     )
 
-//                    devotional?.let { data ->
-//                        Text(
-//                            text = data.title,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(8.dp),
-//                            textAlign = TextAlign.Center,
-//                            fontFamily = StyleScript,
-//                            style = MaterialTheme.typography.titleLarge,
-//                            fontWeight = FontWeight.Bold,
-//                            fontSize = 32.sp,
-//                            color = getTitleColor(data.month)
-//                        )
-//                    }
-
 
                     Text(
                         text = devotional?.verseReference ?: "",
@@ -305,8 +290,8 @@ fun HomeScreen(
         Box(
             modifier = Modifier
                 .size(112.dp)
-                .align(Alignment.TopCenter)
-                .offset(y = 180.dp)
+                .align(Alignment.TopCenter) //paksa posisi di atas tengah layar
+                .offset(y = 180.dp) // fungsinya untuk geser atas bawah
                 .shadow(
                     elevation = 12.dp,
                     shape = CircleShape,
@@ -334,3 +319,15 @@ fun HomeScreenPreview() {
         onClickPreviousDevotions = {}
     )
 }
+
+
+// Alur Navigation
+
+// 1. user berada di HomeScreen
+// 2. klik tombol "Baca Selengkapnya"
+// 3. memanggil onClickDetail()
+// 4. navController.navigate("detail")
+// 5. DetailScreen ditampilkan
+// 6. klik tombol back
+// 7. navController.popBackStack()
+// 8. kembali ke HomeScreen

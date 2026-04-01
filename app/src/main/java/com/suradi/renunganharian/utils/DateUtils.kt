@@ -40,7 +40,7 @@ import androidx.compose.ui.graphics.Color
 
 
 
-    fun getMonthName(month: Int): String {
+    fun getMonthName(month: Int): String { // mengubah angka bulan menjadi nama bulan
         return when (month) {
             1 -> "Januari"
             2 -> "Februari"
@@ -58,6 +58,6 @@ import androidx.compose.ui.graphics.Color
         }
     }
 
-    fun formatDevotionalDate(day: Int, month: Int): String {
+    fun formatDevotionalDate(day: Int, month: Int): String { // menggabungkan hari dan bulan
         return "$day ${getMonthName(month)}"
     }

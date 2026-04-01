@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-    private const val BASE_URL = "https://adaptable-patience-production-9bcf.up.railway.app/"
+    private const val BASE_URL = "https://adaptable-patience-production-9bcf.up.railway.app/" // alamat server
 
     // kalau pakai emulator BASE_URL = "http://10.0.2.2:8080/"
 

@@ -51,10 +51,10 @@ import com.suradi.renunganharian.viewmodel.DetailViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    devotionalId: Int,
-    onBackClick: () -> Unit,
-    onFavoriteClick: () -> Unit,
-    favoriteViewModel: FavoriteViewModel
+    devotionalId: Int,  // data yang dikirim dari HomeScreen
+    onBackClick: () -> Unit,  // fungsi untuk tombol kembali
+    onFavoriteClick: () -> Unit, // callback yang dijalankan setelah ikon hati ditekan
+    favoriteViewModel: FavoriteViewModel // mengirim ViewModel ke screen supaya halaman detail dapat memakai state favorite yang sama dengan halaman lain
 ) {
     val detailViewModel: DetailViewModel = viewModel()
     val devotionalState = detailViewModel.devotional.collectAsState()
@@ -77,11 +77,11 @@ fun DetailScreen(
         return
     }
 
-    val isFavorite = favoriteViewModel.isFavorite(devotional.id)
+    val isFavorite = favoriteViewModel.isFavorite(devotional.id) // mengecek status renungan saat ini. nilai ini menentukan ikon hati mana yang ditampilkan
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
+    Scaffold(  // menyediakan struktur dasar halaman seperti top bar dan area konten
+        topBar = {     // menampilkan judul dan tombol back
+            CenterAlignedTopAppBar( // membuat top bar dengan judul di tengah
                 title = {
                     Text(
                         text = "Detail Renungan",
@@ -90,29 +90,29 @@ fun DetailScreen(
                         fontWeight = FontWeight.SemiBold
                     )
                 },
-                navigationIcon = {
+                navigationIcon = {  // Blok untuk tombol kembali di sisi kiri top bar
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Kembali"
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack, // menentukan ikon panah kembali yang otomatis menyesuaikan arah layout
+                            contentDescription = "Kembali" // deskripsi aksesibilitas untuk pembaca layar
                         )
                     }
                 },
-                actions = {
+                actions = {  // blok sisi kanan top bar. Di sini ditempatkan tombol hati
                     IconButton(
-                        onClick = {
-                            favoriteViewModel.toggleFavorite(devotional.id)
-                            onFavoriteClick()
+                        onClick = {  // membuat tombol hati yang dapat diklik
+                            favoriteViewModel.toggleFavorite(devotional.id) // menambahkan atau menghapus renungan dari daftar favorite
+                            onFavoriteClick() // menjalankan aksi lanjutan setelah toggle, misalnya navigasi ke halaman favorite
                         }
                     ) {
-                        Icon(
-                            imageVector = if (isFavorite) {
+                        Icon(  // menampilkan ikon visual pada tombol
+                            imageVector = if (isFavorite) { // jika status favorite true, tampil hati penuh. Jika false, tampil hati kosong.
                                 Icons.Filled.Favorite
                             } else {
                                 Icons.Outlined.FavoriteBorder
                             },
-                            contentDescription = "Favorite",
-                            tint = Color.Red
+                            contentDescription = "Favorite", // deskripsi aksesibilitas untuk ikon favorite
+                            tint = Color.Red  // memberi warna merah pada ikon hati agar identitas favorite lebih jelas.
                         )
                     }
                 },
@@ -130,7 +130,7 @@ fun DetailScreen(
 }
 
 @Composable
-fun DetailContent(
+fun DetailContent( // memanggil composable konten utama halaman detail
     devotional: Devotional,
     innerPadding: PaddingValues
 ) {

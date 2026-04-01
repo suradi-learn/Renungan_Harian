@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.suradi.renunganharian.data.local.FavoriteDataStore
 import kotlinx.coroutines.launch
 
-class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
+class FavoriteViewModel(application: Application) : AndroidViewModel(application) { // mendeklarasikan class FavoriteViewModel
 
     private val dataStore = FavoriteDataStore(application)
 
