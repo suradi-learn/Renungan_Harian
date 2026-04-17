@@ -29,3 +29,9 @@ Project ini merupakan implementasi dari pengembangan aplikasi mobile, mulai dari
 
 - **Arsitektur MVVM**  
   Struktur code scalable dan mudah dikembangkan
+
+  ## App Preview
+
+<p align="center">
+  <img src="screenshot/home.jpeg" width="300"/>
+</p>
