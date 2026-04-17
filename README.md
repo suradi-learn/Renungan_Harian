@@ -32,6 +32,8 @@ Project ini merupakan implementasi dari pengembangan aplikasi mobile, mulai dari
 
   ## App Preview
 
+## App Preview
+
 <p align="center">
-  <img src="screenshot/home.jpeg" width="300"/>
+  <img src="home.jpeg" width="300"/>
 </p>
